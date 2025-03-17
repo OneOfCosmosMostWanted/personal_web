@@ -1,0 +1,112 @@
+---
+title: "CycleGAN Face Sketch Converter"
+description: "Transforming face sketches into realistic portraits using a custom-modified UNet architecture."
+repository: "shinhaenglee/cyclegan-face-sketch"
+date: "2024-03-15"
+published: true
+---
+
+![CycleGAN Face Sketch Converter](https://user-images.githubusercontent.com/placeholder-image)
+
+## ✍️ The Art of Transformation
+
+Imagine being able to **breathe life into a simple sketch**, transforming rough pencil lines into a **vivid, realistic portrait**. 
+
+Artists, forensic investigators, and digital creators all share a **common challenge**—bridging the gap between **sketched concepts and photorealistic renderings**. With **CycleGAN and a custom UNet-based architecture**, we bring AI-powered transformation to **face sketch conversion**.
+
+## 🛠️ The Science Behind the Art
+
+Traditional **GANs (Generative Adversarial Networks)** often struggle with **cycle consistency** when learning mappings between two domains. **CycleGAN**, however, enables **bidirectional mapping** between **face sketches and realistic portraits** without needing perfectly paired training images.
+
+To enhance performance, we implemented:
+- 🔄 **Custom-Modified UNet**: Improving encoder-decoder pathways for sharper details.
+- 🔍 **Local Self-Attention**: Enhancing texture details in fine regions like eyes & hair.
+- 🏎️ **Buffered Past Images**: Reducing mode collapse and improving training stability.
+
+---
+
+## 📌 **How It Works**
+
+At its core, **CycleGAN** consists of two generators and two discriminators:
+- **Generator A → B**: Converts sketches to portraits.
+- **Generator B → A**: Converts portraits back to sketches.
+- **Cycle Consistency Loss**: Ensures that a converted portrait can be reconstructed back into its original sketch.
+
+### 🚀 **Step 1: Data Preparation**
+We prepare **unpaired** datasets containing **sketches and real faces**.
+
+```python
+from dataset_loader import load_data
+
+# Load sketches and portrait datasets
+sketches, portraits = load_data("data/sketches", "data/portraits")
+
+# Visualize samples
+show_images(sketches[:5], title="Sample Sketches")
+show_images(portraits[:5], title="Sample Portraits")
+```
+
+---
+
+### 🔄 **Step 2: Training the CycleGAN**
+Our **custom UNet architecture** enhances the generator’s performance.
+
+```python
+from cyclegan import CycleGAN
+
+# Initialize CycleGAN model with custom UNet
+model = CycleGAN(input_shape=(256, 256, 3), use_custom_unet=True)
+
+# Train model
+model.train(sketches, portraits, epochs=100, batch_size=16)
+```
+
+By incorporating **local self-attention layers**, our generator learns to focus on **critical face regions**, improving **texture quality and fine-grained details**.
+
+---
+
+### 🎭 **Step 3: Generating Realistic Portraits**
+After training, we **convert a new sketch into a realistic face**.
+
+```python
+from cyclegan import generate_image
+
+# Load trained model
+model.load_weights("cyclegan_weights.h5")
+
+# Convert sketch to portrait
+portrait = generate_image(model, input_sketch="test_sketch.png")
+
+# Show result
+display_image(portrait, title="Generated Portrait")
+```
+
+The result? A **lifelike face**, retaining the unique structure of the original sketch.
+
+---
+
+## 🎯 Future Enhancements
+- **🖌️ Style Transfer Integration**: Allow users to select different portrait styles.
+- **🤖 Fine-tuning for Anime/Manga Sketches**: Expanding beyond real faces.
+- **🚀 On-Device Inference**: Deploying CycleGAN on mobile devices.
+
+## 📥 Get Started
+Clone the repository and start transforming sketches today!
+
+```sh
+git clone https://github.com/shinhaenglee/cyclegan-face-sketch.git
+cd cyclegan-face-sketch
+pip install -r requirements.txt
+```
+
+Run the training notebook:
+
+```sh
+jupyter notebook CycleGAN.ipynb
+```
+
+---
+
+💡 **Want to contribute?** Feel free to explore and enhance the model!
+
+🔗 **[GitHub Repository](https://github.com/shinhaenglee/cyclegan-face-sketch)**
