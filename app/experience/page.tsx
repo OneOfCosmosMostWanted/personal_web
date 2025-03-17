@@ -52,7 +52,7 @@ export default function ExperiencePage() {
       <div className="container mx-auto px-6 py-16">
         
         {/* Experience Section */}
-        <h1 className="text-4xl font-bold text-white text-center mb-12">💼 Experience</h1>
+        <h1 className="my-4 text-4xl font-bold text-white text-center mb-12">💼 Experience</h1>
         <div className="space-y-8">
           {experiences.map((exp, index) => (
             <div key={index} className="border border-gray-700 p-6 rounded-lg bg-zinc-800 shadow-lg flex flex-col md:flex-row items-center md:items-start">
