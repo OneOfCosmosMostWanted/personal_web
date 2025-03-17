@@ -1,5 +1,6 @@
 "use client";
 import { Navigation } from "../components/nav";
+import { Card } from "../components/card";
 import Image from "next/image";
 
 const experiences = [
@@ -13,7 +14,7 @@ const experiences = [
       "Engaged in civilian operations and peacekeeping initiatives to support the local community.",
       "Worked with multinational forces to enhance regional stability and security.",
     ],
-    image: "/unifil.png", 
+    image: "/unifil.png",
   },
   {
     company: "VIP Research Team - Georgia Institute of Technology (GT)",
@@ -25,11 +26,10 @@ const experiences = [
       "Exploring the effectiveness of **Visual Scene Display (VSD)** for post-stroke aphasia patients to improve language rehabilitation.",
       "Collaborating with faculty and fellow researchers at **Georgia Tech** to enhance accessibility solutions in communication technologies.",
     ],
-    image: "/gt.png", 
+    image: "/gt.png",
   },
 ];
 
-// Skill Icons Using URL (No Need to Store Locally)
 const skills = [
   { name: "Python", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
   { name: "Java", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
@@ -47,20 +47,31 @@ const skills = [
 
 export default function ExperiencePage() {
   return (
-    <div className="bg-gradient-to-tl from-zinc-900/0 via-zinc-900 to-zinc-900/0 min-h-screen">
+    <div className="relative pb-16">
       <Navigation />
-      <div className="container mx-auto px-6 py-16">
-        
-        {/* Experience Section */}
-        <h1 className="my-4 text-4xl font-bold text-white text-center mb-12">💼 Experience</h1>
-        <div className="space-y-8">
+      <div className="px-6 pt-20 mx-auto space-y-8 max-w-7xl lg:px-8 md:space-y-16 md:pt-24 lg:pt-32">
+        <div className="max-w-2xl mx-auto lg:mx-0">
+          <h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
+            Experience
+          </h2>
+          <p className="mt-4 text-zinc-400">
+            These are some of my professional and research experiences.
+          </p>
+        </div>
+        <div className="w-full h-px bg-zinc-800" />
+
+        <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2">
           {experiences.map((exp, index) => (
-            <div key={index} className="border border-gray-700 p-6 rounded-lg bg-zinc-800 shadow-lg flex flex-col md:flex-row items-center md:items-start">
-              {/* Experience Details */}
-              <div className="md:w-3/5">
-                <h2 className="text-2xl font-semibold text-white">{exp.company}</h2>
-                <h3 className="text-lg text-zinc-400">{exp.role}</h3>
-                <p className="text-sm text-zinc-500">{exp.date}</p>
+            <Card key={index}>
+              <div className="p-6">
+                <div className="flex items-center space-x-4">
+                  <Image src={exp.image} alt={exp.company} width={60} height={60} className="rounded-full" />
+                  <div>
+                    <h2 className="text-xl font-semibold text-white">{exp.company}</h2>
+                    <h3 className="text-lg text-zinc-400">{exp.role}</h3>
+                    <p className="text-sm text-zinc-500">{exp.date}</p>
+                  </div>
+                </div>
                 <ul className="mt-4 text-zinc-300 space-y-2">
                   {exp.description.map((point, i) => (
                     <li key={i} className="flex items-start">
@@ -69,42 +80,31 @@ export default function ExperiencePage() {
                   ))}
                 </ul>
               </div>
-
-              {/* Experience Image */}
-              <div className="md:w-2/5 mt-6 md:mt-0 md:ml-6 self-end flex justify-end">
-                <Image 
-                  src={exp.image} 
-                  alt={exp.company} 
-                  width={300} 
-                  height={200} 
-                  className="rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
-                />
-              </div>
-            </div>
+            </Card>
           ))}
         </div>
 
         {/* Skills Section */}
-        <div className="mt-16 text-center">
-          <h2 className="text-3xl font-bold text-blue-400">Skills, Tools, and Technologies</h2>
-          <p className="text-zinc-400 mt-4">
-            These are some tools and technologies that I have experience with in various capacities,
-            whether professional, academic, or personal.
+        <div className="max-w-2xl mx-auto lg:mx-0">
+          <h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
+            Skills, Tools, and Technologies
+          </h2>
+          <p className="mt-4 text-zinc-400">
+            These are some tools and technologies that I have experience with in various capacities.
           </p>
         </div>
+        <div className="w-full h-px bg-zinc-800" />
 
-        {/* Centered Grid */}
-        <div className="flex justify-center">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10">
-            {skills.map((skill, index) => (
-              <div key={index} className="bg-zinc-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10">
+          {skills.map((skill, index) => (
+            <Card key={index}>
+              <div className="p-6 flex flex-col items-center">
                 <Image src={skill.image} alt={skill.name} width={60} height={60} />
                 <span className="mt-3 text-white">{skill.name}</span>
               </div>
-            ))}
-          </div>
+            </Card>
+          ))}
         </div>
-
       </div>
     </div>
   );
