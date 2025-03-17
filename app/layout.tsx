@@ -6,14 +6,14 @@ import { Analytics } from "./components/analytics";
 
 export const metadata: Metadata = {
   title: {
-    default: "shinhaenglee.com",
+    default: "Shinhaeng Lee",
     template: "%s | shinhaenglee.com",
   },
-  description: "Shinhaeng Lee",
+  description: "Welcome to Shinhaeng's personal web",
   openGraph: {
-    title: "shinhaenglee.com",
+    title: "Shinhaeng Lee",
     description:
-      "Shinhaeng Lee",
+      "Welcome to Shinhaeng's personal web",
     url: "https://shinhaenglee.com",
     siteName: "shinhaenglee.com",
     images: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Chronark",
+    title: "Shinhaeng",
     card: "summary_large_image",
   },
   icons: {
