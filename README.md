@@ -1,6 +1,6 @@
 # 🚀 Shinhaeng Lee's Personal Website
 
-Welcome to my **personal website**, built with modern web technologies and deployed on **Vercel**! 🎉
+Welcome to my **[Personal Website](https://shinhaenglee.com).**, built with modern web technologies and deployed on **Vercel**! 🎉
 
 ## 🛠 Tech Stack
 This project is built using:
