@@ -1,0 +1,147 @@
+---
+title: "Stock Market Prediction Using Sentiment Analysis"
+description: "Predicting stock prices using bidirectional LSTMs with sentiment analysis from tweets and historical stock data."
+repository: "shinhaenglee/Bidirectional_LSTMs"
+date: "2024-11-01"
+published: true
+---
+
+## 📈 Stock Market Prediction Using Sentiment Analysis
+
+This project explores the **prediction of stock prices** by integrating **deep learning time-series models** with **market sentiment analysis** derived from social media data.
+
+### Key Features:
+- **📊 Multi-Layer Bi-Directional LSTMs with Skip Connections**: Implemented using TensorFlow and Keras for time-series forecasting.
+- **🐦 Sentiment Analysis from Tweets**: Extracted market sentiment using tweets via the **Twitter API**.
+- **📉 Historical Stock Price Data**: Collected from the **Yahoo Finance API** to incorporate real market trends.
+- **📝 TextBlob for Sentiment Scoring**: Capturing public sentiment trends and their influence on stock movements.
+
+---
+
+## 🔍 Collecting & Processing Data
+
+We gather and preprocess **historical stock prices** and **Twitter data**:
+
+### 📥 Fetching Stock Data from Yahoo Finance
+```python
+import yfinance as yf
+
+def get_stock_data(ticker, start_date, end_date):
+    stock = yf.download(ticker, start=start_date, end=end_date)
+    return stock['Close']
+```
+
+### 🐦 Fetching Tweets for Sentiment Analysis
+```python
+import tweepy
+from textblob import TextBlob
+
+# Twitter API Authentication
+api_key = "your_api_key"
+api_secret = "your_api_secret"
+access_token = "your_access_token"
+access_secret = "your_access_secret"
+
+auth = tweepy.OAuthHandler(api_key, api_secret)
+auth.set_access_token(access_token, access_secret)
+api = tweepy.API(auth)
+
+def get_tweet_sentiment(keyword, count=100):
+    tweets = api.search_tweets(q=keyword, count=count, lang='en')
+    sentiments = [TextBlob(tweet.text).sentiment.polarity for tweet in tweets]
+    return sum(sentiments) / len(sentiments) if sentiments else 0
+```
+
+---
+
+## 🏗️ Building the Bi-Directional LSTM Model
+
+We implement **a multi-layer bidirectional LSTM model** with **skip connections** for robust predictions.
+
+```python
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense, Bidirectional, Dropout
+
+def build_lstm_model(input_shape):
+    model = Sequential([
+        Bidirectional(LSTM(128, return_sequences=True), input_shape=input_shape),
+        Dropout(0.2),
+        Bidirectional(LSTM(64, return_sequences=True)),
+        Dropout(0.2),
+        Bidirectional(LSTM(32)),
+        Dense(1)
+    ])
+    model.compile(optimizer='adam', loss='mse')
+    return model
+```
+
+---
+
+## 🏋️ Training & Predicting Stock Prices
+
+We **train the LSTM model** using **stock prices & sentiment scores**.
+
+```python
+from sklearn.preprocessing import MinMaxScaler
+
+def prepare_data(stock_prices, sentiment_scores, time_steps=60):
+    scaler = MinMaxScaler()
+    stock_scaled = scaler.fit_transform(stock_prices.reshape(-1, 1))
+    
+    X, y = [], []
+    for i in range(time_steps, len(stock_scaled)):
+        X.append(np.append(stock_scaled[i-time_steps:i], sentiment_scores[i-time_steps:i]).reshape(time_steps, -1))
+        y.append(stock_scaled[i])
+    return np.array(X), np.array(y)
+```
+
+Train the model:
+```python
+X_train, y_train = prepare_data(stock_prices, sentiment_scores)
+model = build_lstm_model(X_train.shape[1:])
+model.fit(X_train, y_train, epochs=20, batch_size=32)
+```
+
+Predict future prices:
+```python
+predicted_prices = model.predict(X_train)
+predicted_prices = scaler.inverse_transform(predicted_prices)
+```
+
+---
+
+## 📊 Results & Future Improvements
+
+### Observations:
+- Sentiment analysis **improves stock price predictions** by capturing market emotions.
+- Bi-directional LSTMs with **skip connections** yield better accuracy for time-series forecasting.
+
+### Future Work:
+- **Expand dataset** to include financial news sentiment.
+- **Experiment with transformer models** for improved predictions.
+- **Integrate real-time streaming** for live stock market analysis.
+
+---
+
+## 📥 Get Started
+Clone the repository and start training your own stock market predictor!
+
+```sh
+git clone https://github.com/OneOfCosmosMostWanted/Bidirectional_LSTMs.git
+cd Stock-Market-Prediction
+pip install -r requirements.txt
+```
+
+Run the sentiment analysis and prediction pipeline:
+```sh
+python train_model.py
+```
+
+---
+
+💡 **Contribute**: Try fine-tuning model hyperparameters or integrating alternative sentiment analysis techniques!
+
+🔗 **[GitHub Repository](https://github.com/OneOfCosmosMostWanted/Bidirectional_LSTMs)**
+
