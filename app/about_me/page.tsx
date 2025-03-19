@@ -38,22 +38,22 @@ export default function AboutMe() {
         <div className="mt-8 text-white max-w-2xl">
           <h1 className="text-4xl font-bold text-yellow-400">Hi, I'm Shinhaeng Lee! 👋</h1>
           <p className="mt-20 text-lg text-zinc-300 mt-4">
-            I'm a student majoring in **Computer Science** at **Georgia Tech**.  
-            I am pursuing the **BS/MS Program** and will complete my:
+            I'm a student majoring in **Computer Science** at Georgia Tech.  
+            I am pursuing the BS/MS Program and will complete my:
           </p>
           <ul className="mt-4 text-lg text-zinc-400 space-y-2">
-            <li>🎓 **B.S.:** Fall 2025</li>
-            <li>🎓 **M.S.:** Fall 2026</li>
+            <li>🎓 B.S.: Fall 2025</li>
+            <li>🎓 M.S.: Fall 2026</li>
           </ul>
 
           <p className="mt-12 text-lg text-zinc-300 mt-6">
-            My passion lies in **training large AI models** and **pushing the boundaries of AI research**.  
-            I love experimenting with **transformers, diffusion models, and neural architectures** to enhance **deep learning capabilities**.
+            My passion lies in training large AI models and pushing the boundaries of AI research.  
+            I love experimenting with transformers, diffusion models, and neural architectures to enhance deep learning capabilities.
           </p>
 
           <p className="mt-12 text-lg text-zinc-300 mt-6">
-            When I'm not training models, I'm exploring new AI architectures and **delving deep into research**  
-            on cutting-edge advancements in **machine learning and artificial intelligence**.
+            When I'm not training models, I'm exploring new AI architectures and delving deep into research  
+            on cutting-edge advancements in machine learning and artificial intelligence.
           </p>
         </div>
       </div>
