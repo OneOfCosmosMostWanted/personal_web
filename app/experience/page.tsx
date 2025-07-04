@@ -29,7 +29,7 @@ const experiences = [
     image: "/gt.png",
   },
   {
-    company: "Saker Lab (Emory University)",
+    company: "Sarker Lab (Emory University)",
     role: "Undergraduate Research Assistant",
     date: "Summer 2025 - Present",
     description: [
