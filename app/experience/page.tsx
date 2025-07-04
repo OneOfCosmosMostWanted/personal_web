@@ -28,6 +28,18 @@ const experiences = [
     ],
     image: "/gt.png",
   },
+  {
+    company: "VIP Research Team - Georgia Institute of Technology (GT)",
+    role: "Undergraduate Researcher",
+    date: "Spring 2025 - Present",
+    description: [
+      "Conducting research at **Georgia Tech** VIP (Vertically Integrated Projects) program in AI-driven Augmented and Alternative Communication (AAC).",
+      "Developing an iOS application to assist individuals with speech impairments using AI-powered text-to-speech synthesis.",
+      "Exploring the effectiveness of **Visual Scene Display (VSD)** for post-stroke aphasia patients to improve language rehabilitation.",
+      "Collaborating with faculty and fellow researchers at **Georgia Tech** to enhance accessibility solutions in communication technologies.",
+    ],
+    image: "/gt.png",
+  },
 ];
 
 const skills = [
