@@ -29,16 +29,16 @@ const experiences = [
     image: "/gt.png",
   },
   {
-    company: "VIP Research Team - Georgia Institute of Technology (GT)",
-    role: "Undergraduate Researcher",
-    date: "Spring 2025 - Present",
+    company: "Saker Lab (Emory University)",
+    role: "Undergraduate Research Assistant",
+    date: "Summer 2025 - Present",
     description: [
-      "Conducting research at **Georgia Tech** VIP (Vertically Integrated Projects) program in AI-driven Augmented and Alternative Communication (AAC).",
-      "Developing an iOS application to assist individuals with speech impairments using AI-powered text-to-speech synthesis.",
-      "Exploring the effectiveness of **Visual Scene Display (VSD)** for post-stroke aphasia patients to improve language rehabilitation.",
-      "Collaborating with faculty and fellow researchers at **Georgia Tech** to enhance accessibility solutions in communication technologies.",
+      "Architected a modular NLP framework (regex + lexicons + medication-tuned PLMs + LLMs) to extract and classify polysubstance‐use from Reddit.",
+      "Modeled multi-order Markov chains to quantify month-to-month transition probabilities between substances.",
+      "Leveraged Apriori and PrefixSpan to mine frequent and sequential substance use patterns while preserving co-occurrence and temporal order",
+      "Synthesized individual timelines into interactive trajectory visualizations, revealing temporal patterns of common substance use.",
     ],
-    image: "/gt.png",
+    image: "/emory.png",
   },
 ];
 
