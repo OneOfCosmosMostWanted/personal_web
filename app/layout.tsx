@@ -61,22 +61,21 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	return (
-		<html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
-			<head>
+  return (
+    <html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
+      <head>
 				<meta
 					name="description"
 					content="Shinhaeng Lee – AI researcher passionate about deep learning, large datasets, and building intelligent systems."
 				/>
 				<Analytics />
 			</head>
-			<body
-				className={`bg-black ${
-					process.env.NODE_ENV === "development" ? "debug-screens" : undefined
-				}`}
-			>
-				{children}
-			</body>
-		</html>
-	);
+      <body
+        className={`bg-black ${process.env.NODE_ENV === "development" ? "debug-screens" : undefined
+          }`}
+      >
+        {children}
+      </body>
+    </html>
+  );
 }
