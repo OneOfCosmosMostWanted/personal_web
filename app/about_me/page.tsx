@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import un1 from "@/public/un1.jpeg";
 import rome from "@/public/rome.jpg";
 import un2 from "@/public/un2.jpeg";
+import gt_einstein from "@/public/gt_einstein.jpg";
+
 
 export default function AboutMe() {
   const [showGallery, setShowGallery] = useState(false);
-  const images = [un1, rome, un2];
+  const images = [un1, rome, un2, gt_einstein];
 
   useEffect(() => {
     const handleScroll = () => {
