@@ -3,9 +3,13 @@ import { Navigation } from "../components/nav";
 import Image from "next/image";
 import Particles from "../components/particles";
 import { useEffect, useState } from "react";
+import un1 from "@/public/un1.jpeg";
+import rome from "@/public/rome.jpg";
+import un2 from "@/public/un2.jpeg";
 
 export default function AboutMe() {
   const [showGallery, setShowGallery] = useState(false);
+  const images = [un1, rome, un2];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,17 +67,16 @@ export default function AboutMe() {
         <h2 className="text-3xl font-bold text-zinc-300 mb-6">📸 Some Moments</h2>
 
         <div
-          className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 max-w-5xl transition-opacity duration-1000 ${
+          className={`columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4 p-6 max-w-5xl transition-opacity duration-1000 ${
             showGallery ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          {/* Replace these image paths with your actual images */}
-          {["/un1.jpeg", "/rome.jpg", "/un2.jpeg"].map((src, index) => (
+          {images.map((img, index) => (
             <div
               key={index}
-              className="overflow-hidden rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
+              className="mb-4 break-inside-avoid overflow-hidden rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
             >
-              <Image src={src} alt={`Me ${index + 1}`} width={400} height={300} className="rounded-lg" />
+              <Image src={img} alt={`Me ${index + 1}`} className="w-full h-auto rounded-lg" />
             </div>
           ))}
         </div>
