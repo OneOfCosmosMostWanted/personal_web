@@ -62,7 +62,6 @@ def ppo_loss(policy, old_policy, advantage, epsilon=0.2):
 
 ```python
 
-import torch
 
 def compute_gae(rewards: torch.Tensor,
                 values: torch.Tensor,
