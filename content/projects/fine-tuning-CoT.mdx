@@ -33,6 +33,11 @@ def grpo_loss(policy, old_policy, advantage, epsilon=0.2, beta=0.01):
     kl_div = torch.nn.functional.kl_div(policy.log(), old_policy, reduction="batchmean")
     return -policy_loss.mean() - beta * kl_div
 
+```
+
+The original GRPO algorithm does not use GAE or any value‐network–based advantage estimator. In fact, GRPO explicitly omits a critic and simply defines the advantage for each sample in a group as the z‑score of its reward
+
+```python
 
 def compute_group_relative_advantage_GRPO(rewards: torch.Tensor,
                                      eps: float = 1e-8) -> torch.Tensor:
