@@ -69,14 +69,7 @@ def compute_gae(rewards: torch.Tensor,
                 dones: torch.Tensor,
                 gamma: float = 0.99,
                 lam: float = 0.95) -> torch.Tensor:
-    """
-    Compute GAE advantages.
-      rewards: [T,] or [T,] tensor of rewards
-      values:  [T+1,] tensor of value estimates (note the extra bootstrap value)
-      dones:   [T,] binary mask (1 if done after step t, else 0)
-    Returns:
-      advantages: [T,] tensor
-    """
+    
     T = rewards.shape[0]
     advantages = torch.zeros_like(rewards)
     lastgaelam = 0.0
@@ -93,15 +86,7 @@ def compute_group_relative_advantage_PPO(rewards: torch.Tensor,
                                       group_ids: torch.Tensor,
                                       gamma: float = 0.99,
                                       lam: float = 0.95) -> torch.Tensor:
-    """
-    1) Compute GAE advantages
-    2) Subtract each group's mean advantage so group-relative advantages sum to zero
-    
-    rewards:   [T,] tensor
-    values:    [T+1,] tensor
-    dones:     [T,] tensor of 0/1
-    group_ids: [T,] integer tensor (e.g. batch element → group index)
-    """
+
     # 1) GAE
     advantages = compute_gae(rewards, values, dones, gamma, lam)
     
