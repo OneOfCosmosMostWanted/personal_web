@@ -18,67 +18,86 @@ With the increasing demand for **efficient and accurate AI-driven medical diagno
 
 Leveraging the power of **YOLOv3**, we designed an **optimized deep learning model** that improves real-time polyp detection by applying **model pruning techniques**.
 
-### 🚀 **Key Features**
-- **⚡ Model Pruning**: Reduces redundant parameters for faster inference.
-- **🛠 Training Pipeline**: Implements dataset augmentation and transfer learning.
-- **🎯 Real-Time Detection**: Optimized for endoscopy applications.
-- **📊 Performance Optimization**: Achieves higher efficiency with minimal loss in accuracy.
+###  **Key Features**
+- ** Model Pruning**: Reduces redundant parameters for faster inference.
+- ** Training Pipeline**: Implements dataset augmentation and transfer learning.
+- ** Real-Time Detection**: Optimized for endoscopy applications.
+- ** Performance Optimization**: Achieves higher efficiency with minimal loss in accuracy.
 
 ---
 
-## 🏗️ How It Works
+##  How It Works
 
-We applied **structured pruning** to remove redundant convolutional filters, reducing the model size and computation while **preserving detection accuracy**.
+I structured the notebook into three main phases: first, I prepared the Kvasir‑SEG dataset and implemented the full YOLOv3 architecture in PyTorch. I downloaded and preprocessed the images and annotations, ran K‑Means clustering to find optimal anchor boxes, and built data loaders with appropriate augmentations. After defining the backbone, detection heads, and loss functions (including mAP and F1 tracking), I trained the unpruned model to establish a performance baseline on both loss curves and detection metrics.
 
-### 📌 **Step 1: Pruning the Model**
-```python
-# Load the pre-trained YOLOv3 model
-model = load_yolov3_model("yolov3.weights")
+Next, I integrated two pruning strategies—Taylor‑expansion pruning and random pruning—for channel‑wise slimming of the convolutional layers. For Taylor pruning, I accumulated the absolute value of (weight × gradient) over a batch to estimate each channel’s sensitivity to the loss. Channels with the lowest accumulated scores were deemed least important and were masked out. As a sanity check, I also implemented random pruning by selecting the same number of channels at random. Both pruned models were then fine‑tuned for several epochs to recover accuracy.
 
-# Apply structured pruning to convolutional layers
-pruned_model = apply_pruning(model, prune_ratio=0.5)
-
-# Save the optimized model
-pruned_model.save("yolov3_pruned.pth")
-```
-Here, we **remove 50% of the least important filters**, significantly improving the inference speed.
-
----
-
-### 📌 **Step 2: Fine-Tuning on a Medical Dataset**
-After pruning, the model requires **fine-tuning** on polyp detection datasets to regain lost accuracy.
+Below is a distilled snippet showing how I computed Taylor importance scores and applied a pruning mask to each convolutional layer. After creating the masks, I re‑initialized the optimizer and ran a short fine‑tuning loop to adapt the remaining weights.
 
 ```python
-# Load dataset
-dataset = load_polyp_dataset("polyp-detection")
+import torch
+import torch.nn as nn
 
-# Train pruned YOLOv3 model
-train_model(pruned_model, dataset, epochs=10, learning_rate=0.001)
+def compute_taylor_scores(model, data_loader, device):
+    model.eval()
+    scores = {}
+    for name, module in model.named_modules():
+        if isinstance(module, nn.Conv2d):
+            scores[name] = torch.zeros(module.out_channels, device=device)
+    # Accumulate |w * grad| over one pass
+    for images, targets in data_loader:
+        images = images.to(device)
+        outputs = model(images)
+        loss = model.compute_loss(outputs, targets.to(device))
+        model.zero_grad()
+        loss.backward()
+        for name, module in model.named_modules():
+            if isinstance(module, nn.Conv2d) and module.weight.grad is not None:
+                # Sum over kernel dims and input channels
+                grad = module.weight.grad.abs()
+                weight = module.weight.data.abs()
+                # importance per output channel
+                imp = (grad * weight).sum(dim=(1,2,3))
+                scores[name] += imp
+        break  # one batch is enough for scoring
+    return scores
+
+def prune_model(model, scores, prune_ratio=0.2):
+    for name, module in model.named_modules():
+        if name in scores:
+            num_ch = module.out_channels
+            k = int(prune_ratio * num_ch)
+            # get indices of channels to prune
+            _, prune_idx = torch.topk(scores[name], k, largest=False)
+            mask = torch.ones(num_ch, device=scores[name].device)
+            mask[prune_idx] = 0.0
+            # reshape mask for broadcasting to weights and bias
+            mask = mask[:, None, None, None]
+            module.weight.data *= mask
+            if module.bias is not None:
+                module.bias.data *= mask.squeeze()
+    return model
+
+# Example usage:
+device = torch.device('cuda')
+scores = compute_taylor_scores(model, train_loader, device)
+pruned_model = prune_model(model, scores, prune_ratio=0.3)
+
+# Fine‑tune
+optimizer = torch.optim.SGD(pruned_model.parameters(), lr=1e-3, momentum=0.9)
+for epoch in range(5):
+    pruned_model.train()
+    for imgs, tgts in train_loader:
+        imgs, tgts = imgs.to(device), tgts.to(device)
+        out = pruned_model(imgs)
+        loss = pruned_model.compute_loss(out, tgts)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
 ```
-This step ensures the model **re-learns essential patterns** without overfitting.
 
----
-
-### 📌 **Step 3: Real-Time Inference**
-Once optimized, the model can perform **real-time detection** with minimal latency.
-
-```python
-# Load pruned model
-model = load_model("yolov3_pruned.pth")
-
-# Perform real-time polyp detection
-detect_objects(model, input_video="endoscopy.mp4", confidence_threshold=0.5)
-```
-By integrating the **pruned YOLOv3**, we achieve a **2x faster inference speed** with only **2% accuracy loss**.
-
----
-
-## 🎯 Future Improvements
-- **Integrating Self-Attention**: To improve detection accuracy by focusing on polyp regions.
-- **Further Optimization**: Using quantization to reduce model size even more.
-- **Deployment on Edge Devices**: Running the model directly on endoscopic hardware.
-
-## 📥 Get Started
+##  Get Started
 Clone the repository and start testing:
 
 ```sh
