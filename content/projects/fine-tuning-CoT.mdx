@@ -33,6 +33,30 @@ def grpo_loss(policy, old_policy, advantage, epsilon=0.2, beta=0.01):
     kl_div = torch.nn.functional.kl_div(policy.log(), old_policy, reduction="batchmean")
     return -policy_loss.mean() - beta * kl_div
 
+import torch
+
+def compute_group_relative_advantage(rewards: torch.Tensor,
+                                     eps: float = 1e-8) -> torch.Tensor:
+                                     
+    mu    = rewards.mean(dim=1, keepdim=True)
+    sigma = rewards.std(dim=1, unbiased=False, keepdim=True)
+    return (rewards - mu) / (sigma + eps)
+
+
+```
+---
+
+##  Implementing PPO from Scratch
+
+PPO **constrains policy updates** using a clipped objective to prevent large policy shifts.
+
+```python
+
+def ppo_loss(policy, old_policy, advantage, epsilon=0.2):
+    ratio = policy / old_policy
+    clipped_ratio = torch.clamp(ratio, 1 - epsilon, 1 + epsilon)
+    return -torch.min(ratio * advantage, clipped_ratio * advantage).mean()
+
 ```
 
 **Here’s a snippet that (1) computes GAE‐style advantages and then (2) “centers” them per‐group so that each group’s mean advantage is zero:
@@ -92,20 +116,6 @@ def compute_group_relative_advantages(rewards: torch.Tensor,
 
     return rel_adv
 
-
-```
----
-
-##  Implementing PPO from Scratch
-
-PPO **constrains policy updates** using a clipped objective to prevent large policy shifts.
-
-```python
-
-def ppo_loss(policy, old_policy, advantage, epsilon=0.2):
-    ratio = policy / old_policy
-    clipped_ratio = torch.clamp(ratio, 1 - epsilon, 1 + epsilon)
-    return -torch.min(ratio * advantage, clipped_ratio * advantage).mean()
 
 ```
 
