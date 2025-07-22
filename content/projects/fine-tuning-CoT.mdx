@@ -35,6 +35,65 @@ def grpo_loss(policy, old_policy, advantage, epsilon=0.2, beta=0.01):
 
 ```
 
+**Here’s a snippet that (1) computes GAE‐style advantages and then (2) “centers” them per‐group so that each group’s mean advantage is zero:
+
+```python
+
+import torch
+
+def compute_gae(rewards: torch.Tensor,
+                values: torch.Tensor,
+                dones: torch.Tensor,
+                gamma: float = 0.99,
+                lam: float = 0.95) -> torch.Tensor:
+    """
+    Compute GAE advantages.
+      rewards: [T,] or [T,] tensor of rewards
+      values:  [T+1,] tensor of value estimates (note the extra bootstrap value)
+      dones:   [T,] binary mask (1 if done after step t, else 0)
+    Returns:
+      advantages: [T,] tensor
+    """
+    T = rewards.shape[0]
+    advantages = torch.zeros_like(rewards)
+    lastgaelam = 0.0
+    for t in reversed(range(T)):
+        nonterminal = 1.0 - dones[t]
+        delta = rewards[t] + gamma * values[t+1] * nonterminal - values[t]
+        lastgaelam = delta + gamma * lam * nonterminal * lastgaelam
+        advantages[t] = lastgaelam
+    return advantages
+
+def compute_group_relative_advantages(rewards: torch.Tensor,
+                                      values: torch.Tensor,
+                                      dones: torch.Tensor,
+                                      group_ids: torch.Tensor,
+                                      gamma: float = 0.99,
+                                      lam: float = 0.95) -> torch.Tensor:
+    """
+    1) Compute GAE advantages
+    2) Subtract each group's mean advantage so group-relative advantages sum to zero
+    
+    rewards:   [T,] tensor
+    values:    [T+1,] tensor
+    dones:     [T,] tensor of 0/1
+    group_ids: [T,] integer tensor (e.g. batch element → group index)
+    """
+    # 1) GAE
+    advantages = compute_gae(rewards, values, dones, gamma, lam)
+    
+    # 2) center per-group
+    group_ids = group_ids.to(advantages.device)
+    rel_adv = torch.zeros_like(advantages)
+    for g in torch.unique(group_ids):
+        mask = (group_ids == g)
+        mean_g = advantages[mask].mean() if mask.any() else 0.0
+        rel_adv[mask] = advantages[mask] - mean_g
+
+    return rel_adv
+
+
+```
 ---
 
 ##  Implementing PPO from Scratch
