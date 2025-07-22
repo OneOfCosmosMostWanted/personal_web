@@ -8,31 +8,31 @@ published: true
 
 ![CycleGAN Face Sketch Converter](https://user-images.githubusercontent.com/placeholder-image)
 
-## ✍️ The Art of Transformation
+##  The Art of Transformation
 
 Imagine being able to **breathe life into a simple sketch**, transforming rough pencil lines into a **vivid, realistic portrait**. 
 
 Artists, forensic investigators, and digital creators all share a **common challenge**—bridging the gap between **sketched concepts and photorealistic renderings**. With **CycleGAN and a custom UNet-based architecture**, we bring AI-powered transformation to **face sketch conversion**.
 
-## 🛠️ The Science Behind the Art
+##  The Science Behind the Art
 
 Traditional **GANs (Generative Adversarial Networks)** often struggle with **cycle consistency** when learning mappings between two domains. **CycleGAN**, however, enables **bidirectional mapping** between **face sketches and realistic portraits** without needing perfectly paired training images.
 
 To enhance performance, we implemented:
-- 🔄 **Custom-Modified UNet**: Improving encoder-decoder pathways for sharper details.
-- 🔍 **Local Self-Attention**: Enhancing texture details in fine regions like eyes & hair.
-- 🏎️ **Buffered Past Images**: Reducing mode collapse and improving training stability.
+-  **Custom-Modified UNet**: Improving encoder-decoder pathways for sharper details.
+-  **Local Self-Attention**: Enhancing texture details in fine regions like eyes & hair.
+-  **Buffered Past Images**: Reducing mode collapse and improving training stability.
 
 ---
 
-## 📌 **How It Works**
+##  **How It Works**
 
 At its core, **CycleGAN** consists of two generators and two discriminators:
 - **Generator A → B**: Converts sketches to portraits.
 - **Generator B → A**: Converts portraits back to sketches.
 - **Cycle Consistency Loss**: Ensures that a converted portrait can be reconstructed back into its original sketch.
 
-### 🚀 **Step 1: Data Preparation**
+### **Step 1: Data Preparation**
 We prepare **unpaired** datasets containing **sketches and real faces**.
 
 ```python
@@ -48,7 +48,7 @@ show_images(portraits[:5], title="Sample Portraits")
 
 ---
 
-### 🔄 **Step 2: Training the CycleGAN**
+###  **Step 2: Training the CycleGAN**
 Our **custom UNet architecture** enhances the generator’s performance.
 
 ```python
@@ -65,7 +65,7 @@ By incorporating **local self-attention layers**, our generator learns to focus 
 
 ---
 
-### 🎭 **Step 3: Generating Realistic Portraits**
+### **Step 3: Generating Realistic Portraits**
 After training, we **convert a new sketch into a realistic face**.
 
 ```python
@@ -85,12 +85,12 @@ The result? A **lifelike face**, retaining the unique structure of the original 
 
 ---
 
-## 🎯 Future Enhancements
-- **🖌️ Style Transfer Integration**: Allow users to select different portrait styles.
-- **🤖 Fine-tuning for Anime/Manga Sketches**: Expanding beyond real faces.
-- **🚀 On-Device Inference**: Deploying CycleGAN on mobile devices.
+##  Future Enhancements
+- ** Style Transfer Integration**: Allow users to select different portrait styles.
+- ** Fine-tuning for Anime/Manga Sketches**: Expanding beyond real faces.
+- ** On-Device Inference**: Deploying CycleGAN on mobile devices.
 
-## 📥 Get Started
+##  Get Started
 Clone the repository and start transforming sketches today!
 
 ```sh
