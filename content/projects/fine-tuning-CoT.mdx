@@ -8,7 +8,7 @@ published: true
 
 ![GRPO Objective Function](./image.png)
 
-## 🔍 Comparing Fine-Tuning Approaches for Chain-of-Thought (CoT)
+##  Comparing Fine-Tuning Approaches for Chain-of-Thought (CoT)
 
 This project explores the effectiveness of three different fine-tuning strategies for **Chain-of-Thought (CoT) reasoning** in large language models:
 
@@ -20,7 +20,7 @@ We apply these techniques to **GPT-Neo** using the **GSM8K dataset**, a benchmar
 
 ---
 
-## 🚀 Implementing GRPO from Scratch
+##  Implementing GRPO from Scratch
 
 **GRPO (Group Relative Policy Optimization)** stabilizes policy updates by ensuring a relative improvement over a reference policy. Below is the GRPO objective function used in this implementation:
 
@@ -50,7 +50,7 @@ class GRPOAgent(nn.Module):
 
 ---
 
-## 🔄 Implementing PPO from Scratch
+##  Implementing PPO from Scratch
 
 PPO **constrains policy updates** using a clipped objective to prevent large policy shifts.
 
@@ -74,7 +74,7 @@ class PPOAgent(nn.Module):
 
 ---
 
-## 🤖 Implementing CoT Few-Shot Prompting
+##  Implementing CoT Few-Shot Prompting
 
 Few-shot prompting uses pre-trained models with **examples in the prompt** instead of fine-tuning.
 
@@ -99,7 +99,7 @@ def generate_cot_response(prompt, num_samples=3):
 
 ---
 
-## 🎯 Training the Reward Model
+##  Training the Reward Model
 
 To provide structured feedback for reinforcement learning, we train a **DistilRoBERTa-base** reward model on a dataset of comparisons.
 
@@ -125,21 +125,19 @@ def train_reward_model(train_dataloader, optimizer, criterion, epochs=3):
 
 ---
 
-## 📊 Performance Analysis
+##  Performance Analysis
 
 To evaluate these approaches, we measure:
 - **Accuracy on GSM8K problems**
 - **Training stability** (variance in policy updates)
 - **Efficiency of fine-tuning** (training steps to convergence)
 
-📢 **Future Work:** We aim to explore hybrid methods combining GRPO and CoT prompting.
-
 ---
 
 
 ---
 
-💡 **Contribute**: Experiment with hyperparameters and different datasets for further fine-tuning insights!
+ **Contribute**: Experiment with hyperparameters and different datasets for further fine-tuning insights!
 
-🔗 **[GitHub Repository](https://github.com/OneOfCosmosMostWanted)**
+ **[GitHub Repository](https://github.com/OneOfCosmosMostWanted)**
 

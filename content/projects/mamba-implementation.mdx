@@ -12,9 +12,9 @@ This project focuses on implementing the **Mamba model** based on the research p
 
 ---
 
-## 🔬 How Mamba Works
+##  How Mamba Works
 
-### 🏗️ Key Components of the Mamba Model:
+###  Key Components of the Mamba Model:
 1. **State Space Models (SSMs):** Instead of self-attention, Mamba processes sequences using **state-space representations** to maintain efficiency.
 2. **Gated Selective Update Mechanism:** Allows selective updates to hidden states, reducing unnecessary computations.
 3. **Structured Parameterization:** Reduces complexity while maintaining expressive power.
@@ -23,7 +23,7 @@ Unlike Transformers, Mamba models scale linearly **O(N)** with sequence length r
 
 ---
 
-## 🛠️ Implementing Mamba from Scratch
+##  Implementing Mamba from Scratch
 
 Below is the full implementation of the **Mamba model** using **PyTorch**.
 
@@ -73,7 +73,7 @@ class MambaModel(nn.Module):
 
 ---
 
-## 📊 Training the Mamba Model
+##  Training the Mamba Model
 
 We train the Mamba model using **a synthetic sequential dataset**.
 
@@ -112,21 +112,8 @@ for epoch in range(10):
 
 ---
 
-## 🔍 Observations & Future Work
 
-### 🏆 Advantages of Mamba over Transformers:
-- **Linear Time Complexity** (vs. O(N²) for Transformers).
-- **Handles Long Sequences Efficiently** without quadratic memory requirements.
-- **Better Interpretability** due to explicit state updates.
-
-### 🚀 Future Improvements:
-- Implement more complex **gated update mechanisms**.
-- Train Mamba on **real-world NLP tasks** (e.g., text generation, classification).
-- Compare performance with **Transformers and LSTMs**.
-
----
-
-## 📥 Get Started
+##  Get Started
 Clone the repository and run the model:
 
 ```sh
@@ -138,8 +125,8 @@ python train_mamba.py
 
 ---
 
-💡 **Contribute**: Optimize the state-space mechanisms or test on real-world datasets!
+ **Contribute**: Optimize the state-space mechanisms or test on real-world datasets!
 
-🔗 **[GitHub Repository](https://github.com/OneOfCosmosMostWanted)**
+ **[GitHub Repository](https://github.com/OneOfCosmosMostWanted)**
 
 
