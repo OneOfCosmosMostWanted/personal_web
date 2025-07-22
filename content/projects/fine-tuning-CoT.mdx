@@ -25,9 +25,6 @@ We apply these techniques to **GPT-Neo** using the **GSM8K dataset**, a benchmar
 **GRPO (Group Relative Policy Optimization)** stabilizes policy updates by ensuring a relative improvement over a reference policy. Below is the GRPO objective function used in this implementation:
 
 ```python
-import torch
-import torch.nn as nn
-import torch.optim as optim
 
 def grpo_loss(policy, old_policy, advantage, epsilon=0.2, beta=0.01):
     ratio = policy / old_policy
@@ -36,16 +33,6 @@ def grpo_loss(policy, old_policy, advantage, epsilon=0.2, beta=0.01):
     kl_div = torch.nn.functional.kl_div(policy.log(), old_policy, reduction="batchmean")
     return -policy_loss.mean() - beta * kl_div
 
-class GRPOAgent(nn.Module):
-    def __init__(self, input_dim, output_dim):
-        super().__init__()
-        self.policy = nn.Sequential(
-            nn.Linear(input_dim, 128), nn.ReLU(),
-            nn.Linear(128, output_dim), nn.Softmax(dim=-1)
-        )
-    
-    def forward(self, x):
-        return self.policy(x)
 ```
 
 ---
@@ -55,21 +42,12 @@ class GRPOAgent(nn.Module):
 PPO **constrains policy updates** using a clipped objective to prevent large policy shifts.
 
 ```python
+
 def ppo_loss(policy, old_policy, advantage, epsilon=0.2):
     ratio = policy / old_policy
     clipped_ratio = torch.clamp(ratio, 1 - epsilon, 1 + epsilon)
     return -torch.min(ratio * advantage, clipped_ratio * advantage).mean()
 
-class PPOAgent(nn.Module):
-    def __init__(self, input_dim, output_dim):
-        super().__init__()
-        self.policy = nn.Sequential(
-            nn.Linear(input_dim, 128), nn.ReLU(),
-            nn.Linear(128, output_dim), nn.Softmax(dim=-1)
-        )
-
-    def forward(self, x):
-        return self.policy(x)
 ```
 
 ---
@@ -79,7 +57,6 @@ class PPOAgent(nn.Module):
 Few-shot prompting uses pre-trained models with **examples in the prompt** instead of fine-tuning.
 
 ```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
 
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
 model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
