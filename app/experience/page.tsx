@@ -38,7 +38,7 @@ const experiences = [
     image: "/emory.png",
   },
   {
-    company: "VIP Research Team - Georgia Institute of Technology (GT)",
+    company: "VIP Research Team - Georgia Institute of Technology",
     role: "Undergraduate Researcher",
     date: "Spring 2025 - Present",
     description: [
