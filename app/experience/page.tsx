@@ -17,6 +17,27 @@ const experiences = [
     image: "/unifil.png",
   },
   {
+    company: "Teachable AI Lab (TAIL) - Georgia Institute of Technology",
+    role: "Undergraduate Researcher",
+    date: "Fall 2025 - Present",
+    description: [
+      "Currently working on a new project, with a publication on the way!",
+    ],
+    image: "/TAIL.png",
+  },
+  {
+    company: "Sarker Lab - Emory University",
+    role: "Undergraduate Research Assistant",
+    date: "Summer 2025 - Present",
+    description: [
+      "Architected a modular NLP framework (regex + lexicons + medication-tuned PLMs + LLMs) to extract and classify polysubstance‐use from Reddit.",
+      "Modeled multi-order Markov chains to quantify month-to-month transition probabilities between substances.",
+      "Leveraged Apriori and PrefixSpan to mine frequent and sequential substance use patterns while preserving co-occurrence and temporal order",
+      "Synthesized individual timelines into interactive trajectory visualizations, revealing temporal patterns of common substance use.",
+    ],
+    image: "/emory.png",
+  },
+  {
     company: "VIP Research Team - Georgia Institute of Technology (GT)",
     role: "Undergraduate Researcher",
     date: "Spring 2025 - Present",
@@ -27,18 +48,6 @@ const experiences = [
       "Collaborating with faculty and fellow researchers at **Georgia Tech** to enhance accessibility solutions in communication technologies.",
     ],
     image: "/gt.png",
-  },
-  {
-    company: "Sarker Lab (Emory University)",
-    role: "Undergraduate Research Assistant",
-    date: "Summer 2025 - Present",
-    description: [
-      "Architected a modular NLP framework (regex + lexicons + medication-tuned PLMs + LLMs) to extract and classify polysubstance‐use from Reddit.",
-      "Modeled multi-order Markov chains to quantify month-to-month transition probabilities between substances.",
-      "Leveraged Apriori and PrefixSpan to mine frequent and sequential substance use patterns while preserving co-occurrence and temporal order",
-      "Synthesized individual timelines into interactive trajectory visualizations, revealing temporal patterns of common substance use.",
-    ],
-    image: "/emory.png",
   },
 ];
 
