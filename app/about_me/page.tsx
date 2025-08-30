@@ -48,7 +48,7 @@ export default function AboutMe() {
       {/* ===== HERO: image at the very top; rest of page stays black ===== */}
       <section className="relative h-[70vh] w-full">
         <Image
-          src="/about-bg.jpg" 
+          src="/about-bg2.jpg" 
           alt="About page hero"
           fill
           priority
