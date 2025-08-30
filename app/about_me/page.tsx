@@ -14,6 +14,13 @@ export default function AboutMe() {
   const [selectedImage, setSelectedImage] = useState<StaticImageData | null>(null);
   const images = [un1, rome, un2, gt_einstein];
 
+  // === NEW: tooltip state for the hero image ===
+  const [tooltip, setTooltip] = useState<{ show: boolean; x: number; y: number }>({
+    show: false,
+    x: 0,
+    y: 0,
+  });
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 400) {
@@ -48,27 +55,59 @@ export default function AboutMe() {
       {/* ===== HERO: image at the very top; rest of page stays black ===== */}
       <section className="relative h-[70vh] w-full">
         <Image
-          src="/about-bg2.jpg" 
+          src="/about-bg2.jpg"
           alt="About page hero"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center pointer-events-none select-none"
+          // CHANGED: allow pointer events so hover works if needed
+          className="object-cover object-center select-none"
         />
         {/* Darken slightly for readability */}
         <div className="absolute inset-0 bg-black/40" />
         {/* Fade bottom to black so it blends with the page background */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-black" />
-        {/* ^ CHANGED: h-40 -> h-56 for a smoother overlap */}
+
+        {/* === NEW: full-size clickable/hoverable overlay anchor === */}
+        <a
+          href="https://www.museum.go.kr/ENG/contents/E0201070000.do?showHallId=631120&showroomCode=DM0075"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open museum page about this picture"
+          className="absolute inset-0 z-20"
+          onMouseEnter={() => setTooltip((t) => ({ ...t, show: true }))}
+          onMouseLeave={() => setTooltip((t) => ({ ...t, show: false }))}
+          onMouseMove={(e) =>
+            setTooltip({ show: true, x: e.clientX, y: e.clientY })
+          }
+        />
+
+        {/* === NEW: floating tooltip that follows the cursor === */}
+        {tooltip.show && (
+          <div
+            className="
+              fixed z-50 pointer-events-none
+              px-3 py-1 rounded-lg shadow-lg
+              bg-black/80 text-yellow-300 text-sm
+              border border-yellow-500/50
+            "
+            style={{
+              left: tooltip.x + 14, // small offset so it doesn't cover the cursor
+              top: tooltip.y + 14,
+            }}
+          >
+            wanna know about this pic?
+          </div>
+        )}
       </section>
 
       {/* ===== Centered Content ===== */}
       <div
         className="
-          relative z-10                   /* CHANGED: ensure on top of hero */
-          -mt-12 sm:-mt-16 md:-mt-24      /* CHANGED: pull content upward */
+          relative z-10
+          -mt-12 sm:-mt-16 md:-mt-24
           container mx-auto px-6
-          pt-8 pb-16                      /* CHANGED: split py into pt/pb */
+          pt-8 pb-16
           flex flex-col items-center text-center
         "
       >
@@ -77,8 +116,8 @@ export default function AboutMe() {
           <Image
             src="/profile.jpg"
             alt="Shinhaeng Lee"
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
         </div>
 
@@ -87,8 +126,8 @@ export default function AboutMe() {
           <h1 className="text-4xl font-bold text-yellow-400">
             Hi, I'm Shinhaeng Lee!
           </h1>
-          <p className="mt-20 text-lg text-zinc-300 mt-4">
-            I'm a student majoring in **Computer Science** at Georgia Tech. I am
+          <p className="mt-6 text-lg text-zinc-300">
+            I'm a student majoring in <strong>Computer Science</strong> at Georgia Tech. I am
             pursuing the BS/MS Program and will complete my:
           </p>
           <ul className="mt-4 text-lg text-zinc-400 space-y-2">
@@ -96,14 +135,14 @@ export default function AboutMe() {
             <li>🎓 M.S.: Fall 2026</li>
           </ul>
 
-          <p className="mt-12 text-lg text-zinc-300 mt-6">
+          <p className="mt-6 text-lg text-zinc-300">
             My passion lies in training large AI models and pushing the
             boundaries of AI research. I love experimenting with transformers,
             diffusion models, and neural architectures to enhance deep learning
             capabilities.
           </p>
 
-          <p className="mt-12 text-lg text-zinc-300 mt-6">
+          <p className="mt-6 text-lg text-zinc-300">
             When I'm not training models, I'm exploring new AI architectures and
             delving deep into research on cutting-edge advancements in machine
             learning and artificial intelligence.
