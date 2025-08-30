@@ -96,7 +96,7 @@ export default function AboutMe() {
               top: tooltip.y + 14,
             }}
           >
-            wanna know about this pic?
+            Room of Quiet Contemplation
           </div>
         )}
       </section>
