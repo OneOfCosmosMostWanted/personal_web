@@ -85,7 +85,7 @@ export default function AboutMe() {
         {/* About Me Text */}
         <div className="mt-8 text-white max-w-2xl">
           <h1 className="text-4xl font-bold text-yellow-400">
-            Hi, I'm Shinhaeng Lee! 👋
+            Hi, I'm Shinhaeng Lee!
           </h1>
           <p className="mt-20 text-lg text-zinc-300 mt-4">
             I'm a student majoring in **Computer Science** at Georgia Tech. I am
