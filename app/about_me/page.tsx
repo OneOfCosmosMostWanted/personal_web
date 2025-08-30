@@ -48,7 +48,7 @@ export default function AboutMe() {
       {/* ===== HERO: image at the very top; rest of page stays black ===== */}
       <section className="relative h-[70vh] w-full">
         <Image
-          src="/about-bg.jpg"
+          src="/about-bg.jpg" 
           alt="About page hero"
           fill
           priority
@@ -58,11 +58,20 @@ export default function AboutMe() {
         {/* Darken slightly for readability */}
         <div className="absolute inset-0 bg-black/40" />
         {/* Fade bottom to black so it blends with the page background */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-black" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-black" />
+        {/* ^ CHANGED: h-40 -> h-56 for a smoother overlap */}
       </section>
 
       {/* ===== Centered Content ===== */}
-      <div className="container mx-auto px-6 py-16 flex flex-col items-center text-center mt-16">
+      <div
+        className="
+          relative z-10                   /* CHANGED: ensure on top of hero */
+          -mt-12 sm:-mt-16 md:-mt-24      /* CHANGED: pull content upward */
+          container mx-auto px-6
+          pt-8 pb-16                      /* CHANGED: split py into pt/pb */
+          flex flex-col items-center text-center
+        "
+      >
         {/* Profile Picture */}
         <div className="relative w-56 h-56 lg:w-72 lg:h-72 rounded-full overflow-hidden border-4 border-yellow-500 shadow-lg">
           <Image
