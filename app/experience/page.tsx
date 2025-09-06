@@ -27,7 +27,7 @@ const experiences = [
   },
   {
     company: "Sarker Lab - Emory University",
-    role: "Undergraduate Research Assistant",
+    role: "Undergraduate Researcher",
     date: "Summer 2025 - Present",
     description: [
       "Architected a modular NLP framework (regex + lexicons + medication-tuned PLMs + LLMs) to extract and classify polysubstance‐use from Reddit.",
