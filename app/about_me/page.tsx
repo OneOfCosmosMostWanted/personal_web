@@ -8,11 +8,15 @@ import un1 from "@/public/un1.jpeg";
 import rome from "@/public/rome.jpg";
 import un2 from "@/public/un2.jpeg";
 import gt_einstein from "@/public/gt_einstein.jpg";
+import graduation_tech from "@/public/IMG_1283.JPG";
+import graduation_buzz from "@/public/IMG_3424.JPG";
+import graduation_statue from "@/public/IMG_0863.JPG";
+
 
 export default function AboutMe() {
   const [showGallery, setShowGallery] = useState(false);
   const [selectedImage, setSelectedImage] = useState<StaticImageData | null>(null);
-  const images = [un1, rome, un2, gt_einstein];
+  const images = [un1, rome, un2, gt_einstein, graduation_tech, graduation_buzz, graduation_statue];
 
   // === NEW: tooltip state for the hero image ===
   const [tooltip, setTooltip] = useState<{ show: boolean; x: number; y: number }>({
