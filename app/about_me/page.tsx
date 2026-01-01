@@ -9,7 +9,7 @@ import rome from "@/public/rome.jpg";
 import un2 from "@/public/un2.jpeg";
 import gt_einstein from "@/public/gt_einstein.jpg";
 import graduation_tech from "@/public/IMG_1283.jpg";
-import graduation_buzz from "@/public/IMG_3424.jpg";
+import graduation_buzz from "@/public/IMG_3424.png";
 import graduation_statue from "@/public/IMG_0863.jpg";
 
 
